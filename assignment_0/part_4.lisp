@@ -6,13 +6,6 @@
 ; Also it reads any character, which has a ASCII value. So, all character cannot be displayed in the output file
 ; Newline character is printed as an empty line, it is an exception
 
-; Read whole file as a single string
-(defun read-file (filename)
-  (with-open-file (input filename)
-    (let ((data (make-string (file-length input))))
-      (read-sequence data input)
-      data)))
-
 ; A structure that represent Huffman node
 (defstruct node
   (item       nil :type t)
@@ -20,6 +13,13 @@
   (encode     nil :type (or null bit-vector))
   (left-node  nil :type (or null node))
   (right-node nil :type (or null node)))
+
+; Read whole file as a single string
+(defun read-file (filename)
+  (with-open-file (input filename)
+    (let ((data (make-string (file-length input))))
+      (read-sequence data input)
+      data)))
 
 ; Get a string and analyze it, then create and return nodes
 (defun analyze (input)
@@ -43,14 +43,6 @@
       (let ((n3 (make-node :left-node n1 :right-node n2 :frequence (+ (node-frequence n1) (node-frequence n2)))))
         (setf queue (merge 'list (list n3) queue-rest '< :key 'node-frequence))))))
 
-; Convert bit-vector to list
-(defun vector-to-list (v)
-  (let ((len (length v))
-        (data '()))
-    (loop for i from 0 to (- len 1)
-      do (push (aref v i) data))
-  (reverse data)))
-
 ; Find Huffman codes
 (defun find-codes (nodes tree)
   (labels ((hc (node length bits)
@@ -73,6 +65,14 @@
           (t (loop for i from 0 to (- len1 1)
                 do (cond ((< (aref v1 i) (aref v2 i)) (return t))
                          ((> (aref v1 i) (aref v2 i)) (return nil))))))))
+
+; Convert bit-vector to list
+(defun vector-to-list (v)
+  (let ((len (length v))
+        (data '()))
+    (loop for i from 0 to (- len 1)
+      do (push (aref v i) data))
+  (reverse data)))
 
 ; Wrapper function
 (defun huffman-encoder (input-file output-file)
