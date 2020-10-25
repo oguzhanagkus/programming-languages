@@ -4,4 +4,4 @@ These codes are my submissions for CSE344 - Programming Languages course at Gebz
 Handbook of the course was "Concepts of Programming Languages".
 
 Subjects of homeworks:
-- Assignment 0 --> Introduction to Common Lisp (Flattener, Prime Number Finder, Collatz Sequence Finder, Huffman Code Generator)
+- Assignment 0 --> Common Lisp (Flattener, Prime Finder, Collatz Sequence, Huffman Code)
