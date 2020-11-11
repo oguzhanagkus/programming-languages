@@ -11,8 +11,11 @@
 // Output file
 #define OUTPUT_FILE "./lexer_output"
 
+// Helper functions
+void print(int token_id, char *backup);
 int check_running_mode(char *command, char *filename);
 
+// Global variables
 int running_mode, quote_count;
 FILE *input_file, *output_file;
 
@@ -25,7 +28,7 @@ const char token_list[][16] = { "", "", "", "",
 %}
 
 /* -------------------------------------------------- */
-
+// Rule section
 %%
 "and"     return KW_AND;
 "or"      return KW_OR;
@@ -86,11 +89,13 @@ const char token_list[][16] = { "", "", "", "",
 int yywrap() {} // Wraps rule section above
 
 int main() {
-  char command[128], filename[121];
+  int previous_id, token_id, temp_id, exit_flag;
+  char command[128], filename[121], backup[128];
 
   printf("$ ");
   scanf("%[^\n]s", command); // Read without whitespaces
   
+  // Check running mode, read from terminal or file
   running_mode = check_running_mode(command, filename);
   if (running_mode == ERROR) {
     printf("G++ interpretter cannot be started!\nAcceptable inputs: \"g++\" or \"g++ filename\"\n");
@@ -113,9 +118,6 @@ int main() {
 
   /* ------------------------- */
 
-  char backup[128];
-  int previous_id, token_id, temp_id, exit_flag;
-
   previous_id = 0;
   token_id = 0;
   temp_id = 0;
@@ -131,8 +133,11 @@ int main() {
     
     token_id = yylex();
 
-    if (token_id == END_OF_FILE || token_id == UNDEFINED) {
+    if (token_id == END_OF_FILE) {
       exit_flag = 1;
+    }
+    else if (token_id == UNDEFINED) {
+      print(token_id, NULL);
     }
     else if (token_id > NEWLINE) {
       if ((token_id  < OP_PLUS || token_id == OP_CC || token_id == VALUE || token_id == IDENTIFIER) ||
@@ -141,25 +146,24 @@ int main() {
         temp_id = yylex();
 
         if (temp_id != WHITESPACE && temp_id != NEWLINE && temp_id != OP_OP && temp_id != OP_CP && temp_id != OP_CC) {
-          printf("Error! %s%s is not valid!\n", backup, yytext);
+          print(UNDEFINED, backup);
           previous_id = token_id;
           token_id = UNDEFINED;
         }
         else {
-          printf("%s\n", token_list[token_id]);
+          print(token_id, NULL);
           previous_id = token_id;
           token_id = temp_id;
           
           if (temp_id == OP_OP || temp_id == OP_CP || temp_id == OP_CC)
-            printf ("%s\n", token_list[token_id]);
+            print(token_id, NULL);
         }
       }
       else {
-        printf("%s\n", token_list[token_id]);
+        print(token_id, NULL);
       }
     }
 
-    // printf("---> %d %d\n", previous_id, token_id);
     // Exit when empty string entered
     if (running_mode == TERM_MODE && (previous_id == NEWLINE || previous_id == COMMENT) && token_id == NEWLINE) {
       exit_flag = 1;
@@ -168,25 +172,44 @@ int main() {
     previous_id = token_id;
   } while (exit_flag == 0);
   
+  fclose(output_file);
   return 0;
 }
 
 /* -------------------------------------------------- */
 
-int check_running_mode(char *command, char *filename) {
-  int i = 0, j = 0;
-
-  while (command[i] != ' ' && command[i] != '\0')
-    i++;
-
-  if (command[i] == '\0') {
-    if (command[0] == 'g' && command[1] == '+' && command[2] == '+')
-      return 1;
-    else
-      return 0;
+// Wraps printf and fprintf
+void print(int token_id, char *backup) {
+  if (token_id != UNDEFINED) {
+    printf("%s\n", token_list[token_id]);
+    fprintf(output_file, "%s\n", token_list[token_id]);
   }
+  else {
+    if (backup == NULL) {
+      printf("Error! %s cannot be tokenized!\n", yytext);
+      fprintf(output_file, "Error! %s cannot be tokenized!\n", yytext);
+    }
+    else {
+      printf("Error! %s%s cannot be tokenized!\n", backup, yytext);
+      fprintf(output_file, "Error! %s%s cannot be tokenized!\n", backup, yytext);
+    }
+  }
+}
 
-  i++;
+/* -------------------------------------------------- */
+
+// Parses first command and detects running mode
+int check_running_mode(char *command, char *filename) {
+  int i = 4, j = 0;
+
+  if (!(command[0] == 'g' && command[1] == '+' && command[2] == '+'))
+    return 0;
+
+  if (command[3] == '\0')
+    return 1;
+  else if (command[3] != ' ')
+    return 0;
+
   while (command[i] != '\0' && j < 120)
     filename[j++] = command[i++];
 
@@ -197,6 +220,3 @@ int check_running_mode(char *command, char *filename) {
 
   return 2;
 }
-
-/* -------------------------------------------------- */
-
