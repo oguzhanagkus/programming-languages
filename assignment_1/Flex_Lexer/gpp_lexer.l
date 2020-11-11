@@ -133,7 +133,7 @@ int main() {
     
     token_id = yylex();
 
-    if (token_id == END_OF_FILE) {
+    if (token_id == END_OF_FILE) { // For file mode
       exit_flag = 1;
     }
     else if (token_id == UNDEFINED) {
