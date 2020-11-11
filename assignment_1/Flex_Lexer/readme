@@ -12,3 +12,7 @@ To exit, just press enter while it is waiting for an input. It terminates immidi
 To choose second one, just write "g++ <filename>". There should be one whitespace between "g++" and <filename>.
 Extension of file is not important. It start to read your file and write to terminal and file.
 When it reached the end of file, it immidiately terminates.
+
+Note:
+Some tokens cannot follow each other. For example, *123 cannot tokenize according to rules in the pdf.
+I tried to handle these kind of details. 
