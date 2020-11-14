@@ -1,5 +1,5 @@
 ; CSE341 - Assignment 0 - Part 4
-; Oğuzhan Agkuş - 16104003
+; Oğuzhan Agkuş - 161044003
 
 ; NOTES:
 ; I assumed that ecah character is possible and diffirent. I mean capitals and lowers are different.

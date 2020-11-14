@@ -1,5 +1,5 @@
 ; CSE341 - Assignment 0 - Part 3
-; Oğuzhan Agkuş - 16104003
+; Oğuzhan Agkuş - 161044003
 
 ; Reads and returns first line from given file
 (defun read-from-file (filename)
