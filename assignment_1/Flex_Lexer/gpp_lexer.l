@@ -9,11 +9,10 @@
 #define FILE_MODE 2
 
 // Output file
-#define OUTPUT_FILE "./lexer_output"
+#define OUTPUT_FILE "./output"
 
 // Helper functions
 void print(int token_id, char *backup);
-int check_running_mode(char *command, char *filename);
 
 // Global variables
 int running_mode, quote_count;
@@ -28,7 +27,7 @@ const char token_list[][16] = { "", "", "", "",
 %}
 
 /* -------------------------------------------------- */
-// Rule section
+
 %%
 "and"     return KW_AND;
 "or"      return KW_OR;
@@ -88,28 +87,32 @@ const char token_list[][16] = { "", "", "", "",
 
 int yywrap() {} // Wraps rule section above
 
-int main() {
+int main(int argc, char *argv[]) {
   int previous_id, token_id, temp_id, exit_flag;
-  char command[128], filename[121], backup[128];
+  char backup[128];
+  char *filename;
 
-  printf("$ ");
-  scanf("%[^\n]s", command); // Read without whitespaces
-  
-  // Check running mode, read from terminal or file
-  running_mode = check_running_mode(command, filename);
-  if (running_mode == ERROR) {
-    printf("G++ interpretter cannot be started!\nAcceptable inputs: \"g++\" or \"g++ filename\"\n");
-    return -1;
-  }
-  else if (running_mode == FILE_MODE){
-    input_file = fopen(filename, "r");
-    if (input_file == NULL) {
-      printf("Error occured with input file!\n");
+  switch (argc)
+  {
+    case 1:
+      running_mode = TERM_MODE;
+      break;
+    case 2:
+      running_mode = FILE_MODE;
+      filename = argv[1];
+    
+      input_file = fopen(filename, "r");
+      if (input_file == NULL) {
+        printf("Error occured with input file!\n");
+        return -1;
+      }
+      else {
+        yyin = input_file; // Read from this file pointer
+      }
+      break;
+    default:
+      printf("G++ lexer cannot be started!\nYou can only run ./gpp_lexer or ./gpp_lexer filename\n");
       return -1;
-    }
-    else {
-      yyin = input_file; // Read from this file pointer
-    }
   }
 
   output_file = fopen(OUTPUT_FILE, "w+");
@@ -118,11 +121,11 @@ int main() {
 
   /* ------------------------- */
 
-  previous_id = 0;
-  token_id = 0;
-  temp_id = 0;
-  exit_flag = 0;
   quote_count = 0;
+  exit_flag = 0;
+  temp_id = 0;
+  previous_id = NEWLINE;
+  token_id = NEWLINE;
 
   do
   {
@@ -194,29 +197,4 @@ void print(int token_id, char *backup) {
       fprintf(output_file, "Error! %s%s cannot be tokenized!\n", backup, yytext);
     }
   }
-}
-
-/* -------------------------------------------------- */
-
-// Parses first command and detects running mode
-int check_running_mode(char *command, char *filename) {
-  int i = 4, j = 0;
-
-  if (!(command[0] == 'g' && command[1] == '+' && command[2] == '+'))
-    return 0;
-
-  if (command[3] == '\0')
-    return 1;
-  else if (command[3] != ' ')
-    return 0;
-
-  while (command[i] != '\0' && j < 120)
-    filename[j++] = command[i++];
-
-  filename[j] = '\0';
-
-  if (command[i] != '\0' && j == 120) // Too long filename
-    return 0;
-
-  return 2;
 }

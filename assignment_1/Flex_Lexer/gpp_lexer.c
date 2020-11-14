@@ -502,11 +502,12 @@ char *yytext;
 #define FILE_MODE 2
 
 // Output file
-#define OUTPUT_FILE "./lexer_output"
+#define OUTPUT_FILE "./output"
 
+// Helper functions
 void print(int token_id, char *backup);
-int check_running_mode(char *command, char *filename);
 
+// Global variables
 int running_mode, quote_count;
 FILE *input_file, *output_file;
 
@@ -516,9 +517,9 @@ const char token_list[][16] = { "", "", "", "",
                                 "KW_IF", "KW_EXIT", "KW_LOAD", "KW_DISP", "KW_TRUE", "KW_FALSE", 
                                 "OP_PLUS", "OP_MINUS", "OP_DIV", "OP_MULT", "OP_DBLMULT", "OP_COMMA", 
                                 "OP_OP", "OP_CP", "OP_OC", "OP_CC", "COMMENT", "VALUE", "IDENTIFIER" };
-#line 520 "gpp_lexer.c"
+#line 521 "gpp_lexer.c"
 /* -------------------------------------------------- */
-#line 522 "gpp_lexer.c"
+#line 523 "gpp_lexer.c"
 
 #define INITIAL 0
 
@@ -735,9 +736,9 @@ YY_DECL
 		}
 
 	{
-#line 30 "gpp_lexer.l"
+#line 31 "gpp_lexer.l"
 
-#line 741 "gpp_lexer.c"
+#line 742 "gpp_lexer.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -796,137 +797,137 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 31 "gpp_lexer.l"
+#line 32 "gpp_lexer.l"
 return KW_AND;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 32 "gpp_lexer.l"
+#line 33 "gpp_lexer.l"
 return KW_OR;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 33 "gpp_lexer.l"
+#line 34 "gpp_lexer.l"
 return KW_NOT;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 34 "gpp_lexer.l"
+#line 35 "gpp_lexer.l"
 return KW_EQUAL;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 35 "gpp_lexer.l"
+#line 36 "gpp_lexer.l"
 return KW_LESS;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 36 "gpp_lexer.l"
+#line 37 "gpp_lexer.l"
 return KW_NIL;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 37 "gpp_lexer.l"
+#line 38 "gpp_lexer.l"
 return KW_LIST;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 38 "gpp_lexer.l"
+#line 39 "gpp_lexer.l"
 return KW_APPEND;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 39 "gpp_lexer.l"
+#line 40 "gpp_lexer.l"
 return KW_CONCAT;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 40 "gpp_lexer.l"
+#line 41 "gpp_lexer.l"
 return KW_SET;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 41 "gpp_lexer.l"
+#line 42 "gpp_lexer.l"
 return KW_DEFFUN;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 42 "gpp_lexer.l"
+#line 43 "gpp_lexer.l"
 return KW_FOR;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 43 "gpp_lexer.l"
+#line 44 "gpp_lexer.l"
 return KW_IF;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 44 "gpp_lexer.l"
+#line 45 "gpp_lexer.l"
 return KW_EXIT;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 45 "gpp_lexer.l"
+#line 46 "gpp_lexer.l"
 return KW_LOAD;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 46 "gpp_lexer.l"
+#line 47 "gpp_lexer.l"
 return KW_DISP;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 47 "gpp_lexer.l"
+#line 48 "gpp_lexer.l"
 return KW_TRUE;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 48 "gpp_lexer.l"
+#line 49 "gpp_lexer.l"
 return KW_FALSE;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 50 "gpp_lexer.l"
+#line 51 "gpp_lexer.l"
 return OP_PLUS;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 51 "gpp_lexer.l"
+#line 52 "gpp_lexer.l"
 return OP_MINUS;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 52 "gpp_lexer.l"
+#line 53 "gpp_lexer.l"
 return OP_DIV;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 53 "gpp_lexer.l"
+#line 54 "gpp_lexer.l"
 return OP_MULT;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 54 "gpp_lexer.l"
+#line 55 "gpp_lexer.l"
 return OP_DBLMULT;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 55 "gpp_lexer.l"
+#line 56 "gpp_lexer.l"
 return OP_COMMA;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 56 "gpp_lexer.l"
+#line 57 "gpp_lexer.l"
 return OP_OP;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 57 "gpp_lexer.l"
+#line 58 "gpp_lexer.l"
 return OP_CP;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 58 "gpp_lexer.l"
+#line 59 "gpp_lexer.l"
 { 
             quote_count += 1;
             if (quote_count % 2 == 1)
@@ -937,7 +938,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 66 "gpp_lexer.l"
+#line 67 "gpp_lexer.l"
 {
             int token_id;
 
@@ -950,41 +951,41 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 76 "gpp_lexer.l"
+#line 77 "gpp_lexer.l"
 return VALUE;
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 77 "gpp_lexer.l"
+#line 78 "gpp_lexer.l"
 return IDENTIFIER;
 	YY_BREAK
 case 31:
 /* rule 31 can match eol */
 YY_RULE_SETUP
-#line 79 "gpp_lexer.l"
+#line 80 "gpp_lexer.l"
 return NEWLINE;
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 80 "gpp_lexer.l"
+#line 81 "gpp_lexer.l"
 return WHITESPACE;
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 81 "gpp_lexer.l"
+#line 82 "gpp_lexer.l"
 return WHITESPACE;
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 82 "gpp_lexer.l"
+#line 83 "gpp_lexer.l"
 return UNDEFINED;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 83 "gpp_lexer.l"
+#line 84 "gpp_lexer.l"
 ECHO;
 	YY_BREAK
-#line 988 "gpp_lexer.c"
+#line 989 "gpp_lexer.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1989,33 +1990,39 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 83 "gpp_lexer.l"
+#line 84 "gpp_lexer.l"
 
 
 /* -------------------------------------------------- */
 
 int yywrap() {} // Wraps rule section above
 
-int main() {
-  char command[128], filename[121];
+int main(int argc, char *argv[]) {
+  int previous_id, token_id, temp_id, exit_flag;
+  char backup[128];
+  char *filename;
 
-  printf("$ ");
-  scanf("%[^\n]s", command); // Read without whitespaces
-  
-  running_mode = check_running_mode(command, filename);
-  if (running_mode == ERROR) {
-    printf("G++ interpretter cannot be started!\nAcceptable inputs: \"g++\" or \"g++ filename\"\n");
-    return -1;
-  }
-  else if (running_mode == FILE_MODE){
-    input_file = fopen(filename, "r");
-    if (input_file == NULL) {
-      printf("Error occured with input file!\n");
+  switch (argc)
+  {
+    case 1:
+      running_mode = TERM_MODE;
+      break;
+    case 2:
+      running_mode = FILE_MODE;
+      filename = argv[1];
+    
+      input_file = fopen(filename, "r");
+      if (input_file == NULL) {
+        printf("Error occured with input file!\n");
+        return -1;
+      }
+      else {
+        yyin = input_file; // Read from this file pointer
+      }
+      break;
+    default:
+      printf("G++ lexer cannot be started!\nYou can only run ./gpp_lexer or ./gpp_lexer filename\n");
       return -1;
-    }
-    else {
-      yyin = input_file; // Read from this file pointer
-    }
   }
 
   output_file = fopen(OUTPUT_FILE, "w+");
@@ -2024,14 +2031,11 @@ int main() {
 
   /* ------------------------- */
 
-  char backup[128];
-  int previous_id, token_id, temp_id, exit_flag;
-
-  previous_id = 0;
-  token_id = 0;
-  temp_id = 0;
-  exit_flag = 0;
   quote_count = 0;
+  exit_flag = 0;
+  temp_id = 0;
+  previous_id = NEWLINE;
+  token_id = NEWLINE;
 
   do
   {
@@ -2042,7 +2046,7 @@ int main() {
     
     token_id = yylex();
 
-    if (token_id == END_OF_FILE) {
+    if (token_id == END_OF_FILE) { // For file mode
       exit_flag = 1;
     }
     else if (token_id == UNDEFINED) {
@@ -2087,6 +2091,7 @@ int main() {
 
 /* -------------------------------------------------- */
 
+// Wraps printf and fprintf
 void print(int token_id, char *backup) {
   if (token_id != UNDEFINED) {
     printf("%s\n", token_list[token_id]);
@@ -2103,28 +2108,3 @@ void print(int token_id, char *backup) {
     }
   }
 }
-
-/* -------------------------------------------------- */
-
-int check_running_mode(char *command, char *filename) {
-  int i = 4, j = 0;
-
-  if (!(command[0] == 'g' && command[1] == '+' && command[2] == '+'))
-    return 0;
-
-  if (command[3] == '\0')
-    return 1;
-  else if (command[3] != ' ')
-    return 0;
-
-  while (command[i] != '\0' && j < 120)
-    filename[j++] = command[i++];
-
-  filename[j] = '\0';
-
-  if (command[i] != '\0' && j == 120) // Too long filename
-    return 0;
-
-  return 2;
-}
-
