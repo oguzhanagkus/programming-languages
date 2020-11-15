@@ -2085,6 +2085,7 @@ int main(int argc, char *argv[]) {
     previous_id = token_id;
   } while (exit_flag == 0);
   
+  fclose(input_file);
   fclose(output_file);
   return 0;
 }
