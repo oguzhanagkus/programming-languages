@@ -273,7 +273,7 @@
   (if (equal input *standard-input*)
           (format t "> "))
   (loop for line = (read-line input nil)
-    until (or (equal line nil) (equal line ""))
+    until (or (equal line nil) (and (equal input *standard-input*) (equal line "")))
       do 
         (line-handler line)
         (if (equal input *standard-input*)

@@ -16,7 +16,7 @@ void print(int token_id, char *backup);
 
 // Global variables
 int running_mode, quote_count;
-FILE *input_file, *output_file;
+FILE *input_file = NULL, *output_file = NULL;
 
 const char token_list[][16] = { "", "", "", "", 
                                 "KW_AND", "KW_OR", "KW_NOT", "KW_EQUAL", "KW_LESS", "KW_NIL", 
@@ -175,7 +175,8 @@ int main(int argc, char *argv[]) {
     previous_id = token_id;
   } while (exit_flag == 0);
   
-  fclose(input_file);
+  if (input_file != NULL)
+    fclose(input_file);  
   fclose(output_file);
   return 0;
 }
