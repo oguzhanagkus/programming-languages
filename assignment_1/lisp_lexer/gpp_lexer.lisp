@@ -10,14 +10,14 @@
 
 (defvar operator-tokens
   (list "OP_PLUS" "OP_MINUS" "OP_DIV" "OP_MULT" "OP_DBLMULT" 
-        "OP_COMMA" "OP_OP" "OP_CP" "OP_OC" "OP_CC"))
+        "OP_COMMA" "OP_OP" "OP_CP" "OP_OC" "OP_CC" "OP_DIV2"))
 
 (defvar keywords
   (list "and" "or" "not" "equal" "less" "nil" "list" "append" "concat" "set" "deffun" 
         "for" "if" "exit" "load" "disp" "true" "false"))
 
 (defvar operators
-  (list "+" "-" "/" "*" "**" "," "(" ")" "\"" "\""))
+  (list "+" "-" "/" "*" "**" "," "(" ")" "\"" "\"" "\\"))
 
 (defvar space 
   (list " " "\t" "\n"))
@@ -144,9 +144,17 @@
 							(progn
 								; If it is multiplication operator, check next character for double multiplication
 								(if (equal result 3)
-									(if (and (< i size)
-                    (string= (subseq word i (+ i 1)) "*"))
-                    (setq result 4)))
+									(if (and (< i size) (string= (subseq word i (+ i 1)) "*"))
+                    (progn
+                      (setq i (+ i 1))
+                      (setq result 4))))
+
+                ; If it is division operator, check next character for double divison
+								(if (equal result 2)
+									(if (and (< i size) (string= (subseq word i (+ i 1)) "/"))
+                    (progn
+                      (setq i (+ i 1))
+                      (setq result 10))))
 
 								; If it is quote ("), check it for opening or closing quote
 								(if (equal result 7)

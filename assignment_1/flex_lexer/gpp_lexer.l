@@ -22,7 +22,7 @@ const char token_list[][16] = { "", "", "", "",
                                 "KW_AND", "KW_OR", "KW_NOT", "KW_EQUAL", "KW_LESS", "KW_NIL", 
                                 "KW_LIST", "KW_APPEND", "KW_CONCAT", "KW_SET", "KW_DEFFUN", "KW_FOR", 
                                 "KW_IF", "KW_EXIT", "KW_LOAD", "KW_DISP", "KW_TRUE", "KW_FALSE", 
-                                "OP_PLUS", "OP_MINUS", "OP_DIV", "OP_MULT", "OP_DBLMULT", "OP_COMMA", 
+                                "OP_PLUS", "OP_MINUS", "OP_DIV", "OP_DIV2", "OP_MULT", "OP_DBLMULT", "OP_COMMA", 
                                 "OP_OP", "OP_CP", "OP_OC", "OP_CC", "COMMENT", "VALUE", "IDENTIFIER" };
 %}
 
@@ -74,8 +74,9 @@ const char token_list[][16] = { "", "", "", "",
             return COMMENT;
           }
 
-[0]|[1-9][0-9]*       return VALUE;
-[a-zA-Z][a-zA-Z0-9]*  return IDENTIFIER;
+(0)|([1-9][0-9]*)               return VALUE; // Non zero-leading integer
+((0)|([1-9][0-9]*))\.([0-9]+)   return VALUE; // No zero-leading real number (0.x accepted)
+[a-zA-Z][a-zA-Z0-9]*            return IDENTIFIER;
 
 "\n"      return NEWLINE;
 "\t"      return WHITESPACE;
